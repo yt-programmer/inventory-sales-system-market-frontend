@@ -1,4 +1,4 @@
-const BASE = (import.meta.env.VITE_API_URL || "") + "/api";
+const BASE = "/api";
 
 // Unified server error: message + status + code + errors (field errors use the same names as the form fields)
 export class ApiError extends Error {
@@ -40,5 +40,8 @@ export async function api(path, { method = "GET", body } = {}) {
 // Converts any error to { fields, message }: field errors show under each field, the rest is a general message
 export function splitError(e) {
   const fields = e?.errors || {};
-  return { fields, message: Object.keys(fields).length ? "" : e?.message || "Something went wrong, please try again" };
+  return {
+    fields,
+    message: Object.keys(fields).length ? "" : e?.message || "Something went wrong, please try again",
+  };
 }
